@@ -110,8 +110,7 @@ def train_best_model(
 
 
 @flow
-# def main_flow(
-def test2_flow(
+def hw3_flow1(
     # train_path: str = "./data/green_tripdata_2021-01.parquet",
     # val_path: str = "./data/green_tripdata_2021-02.parquet",
     train_path: str = "./data/green_tripdata_2023-01.parquet",
@@ -135,4 +134,4 @@ def test2_flow(
 
 
 if __name__ == "__main__":
-    test2_flow()
+    hw3_flow1()
