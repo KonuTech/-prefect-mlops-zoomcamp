@@ -9,9 +9,10 @@ from sklearn.metrics import mean_squared_error
 import mlflow
 import xgboost as xgb
 from prefect import flow, task
+from prefect.schedules import CronSchedule
 
 
-@task(retries=3, retry_delay_seconds=2)
+@task(retries=3, retry_delay_seconds=2, name="Read taxi data")
 def read_data(filename: str) -> pd.DataFrame:
     """Read data into DataFrame"""
     df = pd.read_parquet(filename)
@@ -46,7 +47,7 @@ def add_features(
     df_train["PU_DO"] = df_train["PULocationID"] + "_" + df_train["DOLocationID"]
     df_val["PU_DO"] = df_val["PULocationID"] + "_" + df_val["DOLocationID"]
 
-    categorical = ["PU_DO"]  #'PULocationID', 'DOLocationID']
+    categorical = ["PU_DO"]  # 'PULocationID', 'DOLocationID']
     numerical = ["trip_distance"]
 
     dv = DictVectorizer()
@@ -109,11 +110,16 @@ def train_best_model(
     return None
 
 
-@flow
+schedule = CronSchedule("0 9 3 * *")
+
+
+@flow(schedule=schedule)
 # def main_flow(
 def test2_flow(
-    train_path: str = "./data/green_tripdata_2021-01.parquet",
-    val_path: str = "./data/green_tripdata_2021-02.parquet",
+    # train_path: str = "./data/green_tripdata_2021-01.parquet",
+    # val_path: str = "./data/green_tripdata_2021-02.parquet",
+    train_path: str = "./data/green_tripdata_2023-01.parquet",
+    val_path: str = "./data/green_tripdata_2023-02.parquet",
 ) -> None:
     """The main training pipeline"""
 
