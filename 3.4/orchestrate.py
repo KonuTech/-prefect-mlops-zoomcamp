@@ -9,7 +9,6 @@ from sklearn.metrics import mean_squared_error
 import mlflow
 import xgboost as xgb
 from prefect import flow, task
-from prefect.schedules import CronSchedule
 
 
 @task(retries=3, retry_delay_seconds=2, name="Read taxi data")
@@ -110,10 +109,7 @@ def train_best_model(
     return None
 
 
-schedule = CronSchedule("0 9 3 * *")
-
-
-@flow(schedule=schedule)
+@flow
 # def main_flow(
 def test2_flow(
     # train_path: str = "./data/green_tripdata_2021-01.parquet",

@@ -22,6 +22,7 @@ prefect project init
 prefect deploy 3.4/orchestrate.py:test_flow -n taxi_local_data -p zoompool
 prefect deploy 3.4/orchestrate.py:main_flow -n taxi_local_data -p zoompool
 prefect deploy 3.4/orchestrate.py:test2_flow -n taxi_local_data -p zoompool
+prefect deploy 3.4/orchestrate.py:hw3_flow1 -n taxi_local_data -p zoompool
 
 prefect worker start -p zoompool
 prefect worker start --pool zoompool --work-queue default
